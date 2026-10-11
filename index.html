@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <meta content="Yogesh N — BCA student focused on Data Science, Machine Learning and Web Development." name="description"/>
@@ -769,6 +770,9 @@ h2 {
         I'm Yogesh N, a BCA student graduating in 2027. I learn by experimenting, building projects, and figuring out how things work—from machine learning notebooks to full-stack web applications.
        </p>
        <div class="actions">
+        <button class="btn" onclick="downloadResume()">
+    ↓ Download Resume
+        </button>
         <a class="btn primary" href="#work">
          Explore projects →
         </a>
@@ -1212,6 +1216,155 @@ h2 {
    </div>
   </div>
   <script>
+   
+function downloadResume() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+
+    const margin = 15;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const contentWidth = pageWidth - margin * 2;
+    let y = 20;
+
+    function heading(text) {
+        y += 4;
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 122, 102);
+        pdf.text(text, margin, y);
+        y += 7;
+    }
+
+    function paragraph(text) {
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9);
+        pdf.setTextColor(45, 45, 45);
+
+        const lines = pdf.splitTextToSize(text, contentWidth);
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        if (y + lines.length * 5 > pageHeight - 15) {
+            pdf.addPage();
+            y = 20;
+        }
+
+        pdf.text(lines, margin, y);
+        y += lines.length * 5 + 2;
+    }
+
+    // Header
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(22);
+    pdf.setTextColor(20, 40, 75);
+    pdf.text("Yogesh N", pageWidth / 2, y, { align: "center" });
+    y += 7;
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    pdf.text(
+        "BCA Student | Data Science | Machine Learning | Web Development",
+        pageWidth / 2,
+        y,
+        { align: "center" }
+    );
+    y += 6;
+
+    pdf.setFontSize(8);
+    pdf.text(
+        "Yogeshwanocoder@gmail.com",
+        pageWidth / 2,
+        y,
+        { align: "center" }
+    );
+    y += 5;
+
+    pdf.text(
+        "GitHub: github.com/Yogesh-BCA-Ds",
+        pageWidth / 2,
+        y,
+        { align: "center" }
+    );
+    y += 5;
+
+    pdf.text(
+        "LinkedIn: linkedin.com/in/yogesh-n-838b97331/",
+        pageWidth / 2,
+        y,
+        { align: "center" }
+    );
+
+    // Profile
+    heading("PROFILE");
+    paragraph(
+        "BCA student graduating in 2027, developing practical skills " +
+        "in Python, data analysis, machine learning, and full-stack " +
+        "web development through hands-on projects."
+    );
+
+    // Skills
+    heading("TECHNICAL SKILLS");
+    paragraph(
+        "Data Science: Python, Pandas, NumPy, Matplotlib, " +
+        "Scikit-learn, Statistics, Regression, Classification, Clustering."
+    );
+    paragraph(
+        "Web Development: HTML, CSS, JavaScript, Flask, SQL, SQLite, " +
+        "Forms, Routes, Frontend and Backend Integration."
+    );
+    paragraph(
+        "Tools: Git, GitHub, Jupyter Notebook, Data Cleaning, " +
+        "Exploratory Analysis, Debugging and Testing."
+    );
+
+    // Projects
+    heading("PROJECTS");
+
+    paragraph(
+        "1. Vote Management System | Flask, SQLite\n" +
+        "A web application with login, role-based access, election " +
+        "management, and a voter dashboard. ML integration is planned.\n" +
+        "GitHub: github.com/Yogesh-BCA-Ds/vote-management-system-"
+    );
+
+    paragraph(
+        "2. Retail Customer Segmentation | Python, Pandas, K-Means\n" +
+        "Exploring retail transactions using RFM features, preprocessing, " +
+        "and clustering to investigate customer groups.\n" +
+        "GitHub: github.com/Yogesh-BCA-Ds/ML-Small-Projects_1"
+    );
+
+    paragraph(
+        "3. Machine Learning Experiments | Scikit-learn, Python\n" +
+        "Supervised and unsupervised learning experiments involving " +
+        "regression, classification, model evaluation, and clustering.\n" +
+        "GitHub: github.com/Yogesh-BCA-Ds/ML-Small-Projects_1"
+    );
+
+    paragraph(
+        "4. Python Playground | Python, NumPy, Pandas, Matplotlib\n" +
+        "Small Python programs and statistics demonstrations.\n" +
+        "GitHub: github.com/Yogesh-BCA-Ds/python-playground"
+    );
+
+    paragraph(
+        "5. Full-Stack Web Development Coursework\n" +
+        "College projects involving frontend forms, backend routes, " +
+        "database integration, and web application workflows.\n" +
+        "GitHub: github.com/Yogesh-BCA-Ds/FINAL_BCA"
+    );
+
+    // Education
+    heading("EDUCATION");
+    paragraph(
+        "Bachelor of Computer Applications (BCA)\n" +
+        "Swamy Vivekananda Rural First Grade College\n" +
+        "Expected graduation: 2027"
+    );
+
+    // Download the generated PDF
+    pdf.save("Yogesh_N_Resume.pdf");
+}
+   
    const panes = [...document.querySelectorAll('.pane')];
 
 function showPane(id) {
